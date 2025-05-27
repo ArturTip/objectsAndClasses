@@ -33,7 +33,6 @@ class WallServiseTest {
     @Test
     fun add() {
 
-        val posts = WallServise.posts
         WallServise.add(Post(15, 20, "Test", Comments(), Reposts(), Likes()))
         WallServise.add(Post(id = 3, 15, 20, "HelloWord", Comments(), Reposts(), Likes()))
         WallServise.showPost()
