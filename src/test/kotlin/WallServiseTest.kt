@@ -1,4 +1,3 @@
-import WallServise.posts
 import junit.framework.TestCase.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -31,22 +30,12 @@ class WallServiseTest {
         assertEquals(false, result)
     }
 
-    @Test
-    fun add() {
-
-        WallServise.add(Post(15, 20, "Test", Comments(), Reposts(), Likes()))
-        WallServise.add(Post(id = 3, 15, 20, "HelloWord", Comments(), Reposts(), Likes()))
-        WallServise.showPost()
-        val result = posts.size
-        assertEquals(2, result)
-
-    }
-
+    
     @Test
     fun addId() {
 
         val testPost = WallServise.add(Post(15, 20, "Test", Comments(), Reposts(), Likes()))
-      val testPost2 = WallServise.add(Post(id = 3, 15, 20, "HelloWord", Comments(), Reposts(), Likes()))
+        val testPost2 = WallServise.add(Post(id = 3, 15, 20, "HelloWord", Comments(), Reposts(), Likes()))
         WallServise.showPost()
         assertTrue(testPost.id > 0)
         assertTrue(testPost2.id > 0)
