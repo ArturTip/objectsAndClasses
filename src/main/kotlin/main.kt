@@ -5,17 +5,13 @@ fun main() {
     WallServise.add(newPostTestNull)
     WallServise.showPost()
 
-    val audioAttachment1 = AudioAttachment().apply {
-        audio.id = 1
-        audio.userId = newPost.ownerId
-        audio.text = "AAAA"
-    }
-    val videoAttachment1 = VideoAttachment()
-    val photoAttachment1 = PhotoAttachment()
-    newPost.attachments.add(audioAttachment1)
+    addAttachment(newPost.attachments, AudioAttachment())
+    addAttachment(newPostTestNull.attachments, VideoAttachment())
     WallServise.showPost()
 
 }
+
+
 
 data class Post(
     var id: Int,
