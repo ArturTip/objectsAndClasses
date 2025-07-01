@@ -1,14 +1,56 @@
 fun main() {
-    WallServise.add(Post(50, 10, "HelloWord", Comments(), Reposts(), Likes()))
-    WallServise.add(Post(10, 15, "HelloWord2", Comments(), Reposts(), Likes()))
-    WallServise.add(Post(25, 36, "HelloWord3", Comments(), Reposts(), Likes()))
-    WallServise.add(Post(1, 20, "HelloWord4", Comments(), Reposts(), Likes()))
-    WallServise.update(Post(id = 2, 15, 15, "newHelloWord", Comments(), Reposts(), Likes()))
+    val newPost = Post(1, 1, "new post text", null, Reposts(), Likes())
+    val newPostTestNull = Post(4, 5, "postText", Comments(), null, Likes())
+    WallServise.add(newPost)
+    WallServise.add(newPostTestNull)
     WallServise.showPost()
+
+    val audioAttachment1 = AudioAttachment().apply {
+        audio.id = 1
+        audio.userId = newPost.ownerId
+        audio.text = "AAAA"
+    }
+    val videoAttachment1 = VideoAttachment()
+    val photoAttachment1 = PhotoAttachment()
+    newPost.attachments.add(audioAttachment1)
+    WallServise.showPost()
+
 }
 
+data class Post(
+    var id: Int,
+    val ownerId: Int? = 1,
+    val fromId: Int = 10,
+    val text: String,
+    val comments: Comments? = null,
+    val reposts: Reposts? = null,
+    val likes: Likes,
+    val attachments: MutableList<Attachment> = mutableListOf<Attachment>()
+) {
+    constructor(
+        ownerId: Int?, fromId: Int, text: String, comments: Comments?, reposts: Reposts?, likes: Likes,
+    ) : this(0, ownerId, fromId, text, comments, reposts, likes)
+
+}
+
+class Comments(
+    var countComments: Int = 0,
+    val canPost: Boolean = true,
+    val groupsCanPost: Boolean = true,
+    val canUserCloseComments: Boolean = true,
+    val canUserOpenComments: Boolean = true,
+
+    )
+
+class Reposts(
+    var countReposts: Int = 0, val userReposted: Boolean = true
+)
+
+data class Likes(var countLikes: Int = 0, val userLikes: Boolean = true, val userCanLikes: Boolean = true)
+
 object WallServise {
-var posts = emptyArray<Post>()
+    var posts = emptyArray<Post>()
+
     private var nextId = 1
 
     fun clear() {
@@ -26,52 +68,26 @@ var posts = emptyArray<Post>()
 
         for ((index, updatePost) in posts.withIndex()) {
             if (updatePost.id == post.id) {
-                posts[index] = post.copy()
+                posts[index] = post.copy(likes = post.likes.copy())
                 return true
             }
         }
         return false
     }
 
-
     fun add(post: Post): Post { // Добавляет новый пост
-        val newPost = post.copy(id = nextId)
+        val newPost = post.copy(id = nextId, likes = post.likes.copy())
         posts += newPost
         nextId += 1
         return newPost
     }
 
-}
-
-data class Post(
-    var id: Int,
-    val ownerId: Int = 1,
-    val fromId: Int = 10,
-    val text: String,
-    val comments: Comments,
-    val reposts: Reposts,
-    val likes: Likes
-) {
-    constructor(
-        ownerId: Int, fromId: Int, text: String, comments: Comments, reposts: Reposts, likes: Likes
-    ) : this(0, ownerId, fromId, text, comments, reposts, likes)
-
 
 }
 
 
-class Comments(
-    var countComments: Int = 0,
-    val canPost: Boolean = true,
-    val groupsCanPost: Boolean = true,
-    val canUserCloseComments: Boolean = true,
-    val canUserOpenComments: Boolean = true,
 
-    )
 
-class Reposts(
-    var countReposts: Int = 0, val userReposted: Boolean = true
-)
 
-class Likes(var countLikes: Int = 0, val userLikes: Boolean = true, val userCanLikes: Boolean = true)
+
 
