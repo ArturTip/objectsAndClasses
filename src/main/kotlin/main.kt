@@ -5,8 +5,8 @@ fun main() {
     WallServise.add(newPostTestNull)
     WallServise.showPost()
 
-    addAttachment(newPost.attachments, AudioAttachment())
-    addAttachment(newPostTestNull.attachments, VideoAttachment())
+    addAttachment(newPost.attachments, AudioAttachment(Audio(1,3,"ads") ))
+    addAttachment(newPostTestNull.attachments, VideoAttachment(Video(2,5,"ggg")))
     WallServise.showPost()
 
 }
